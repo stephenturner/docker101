@@ -1,11 +1,24 @@
-# docker101
+# Docker 101
+
+## Pre-requisites
+
+Required reading:
+
+- https://staphb.org/docker-builds/run_containers/
+- https://staphb.org/docker-builds/make_containers/
 
 ## Hello world
+
+> This basic container uses the Alpine Linux distribution and without any modification simply echoes "Hello world" to the host machine. Objectives:
+> - Building a container
+> - Running a container with a default `CMD`
+> - Overriding the default `CMD`
+> - Stepping inside the container with `-it ... /bin/ash`
 
 Build:
 
 ```sh
-docker build --no-cache -t d101/helloworld ./01-helloworld
+docker build -t d101/helloworld ./01-helloworld
 ```
 
 Run:
@@ -19,7 +32,25 @@ docker run --rm d101/helloworld date
 docker run --rm d101/helloworld hostname
 ```
 
+Step inside the running container
+
+```sh
+docker run --rm -it d101/helloworld /bin/ash
+whoami
+pwd
+ls -l
+hostname
+exit
+```
+
 ## HTSlib
+
+> Build a container installing several required dependencies, then download and install bcftools. Objectives:
+> - Build a container with external software and dependencies
+> - Run the container
+> - Mount host volumes to the running container with `-v`
+> - Run tools inside the container on data on the host system via a volume mount
+> - Step inside the running container and play around
 
 Build:
 
@@ -53,6 +84,11 @@ exit
 
 ## Bcftools as an executable
 
+> This demonstrates a different way to use Docker, essentially using it as an executable with an `ENTRYPOINT` in the Dockerfile. Objectives:
+> - Mount the current host pwd to the same pwd in the container
+> - Set the working dir in the container to the same full path on the host
+> - Run a container as an executable on host data
+
 Build:
 
 ```sh
@@ -72,6 +108,12 @@ cd ..
 
 ## Pipeline
 
+> Demonstrates how to build an entire pipeline that runs inside a container using data from the host system inside the container. Objectives:
+> - Set the user and group ID of the user _inside the container_
+> - Mount a host directory to a mount point on the container
+> - Pass an environment variable to the running container
+> - Show how the container runs several scripts on data on the host
+
 Build:
 
 ```sh
@@ -89,3 +131,8 @@ ls -lh exampledata
 cat exampledata/a.out.csv
 open exampledata/a.out.csv
 ```
+
+## Learn more
+
+- Inspect Dockerfiles at https://github.com/stephenturner/slimbioinfo
+- Inspect Dockerfiles at https://github.com/StaPH-B/docker-builds
