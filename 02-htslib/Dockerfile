@@ -20,4 +20,4 @@ RUN wget -q https://github.com/samtools/samtools/releases/download/${VERSION_HTS
     make -j4 && \
     make install
 
-workdir /data
+WORKDIR /data
